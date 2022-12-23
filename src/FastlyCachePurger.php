@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BEAR\FastlyModule;
 
+use BEAR\FastlyModule\Attribute\ServiceId;
+use BEAR\FastlyModule\Attribute\SoftPurge;
 use BEAR\QueryRepository\PurgerInterface;
 use Fastly\Api\PurgeApi;
 use Fastly\ApiException;
@@ -12,19 +14,14 @@ use function explode;
 
 final class FastlyCachePurger implements PurgerInterface
 {
-    protected string $fastlyServiceId;
-    private bool $enableSoftPurge;
-
     /**
      * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
      */
     public function __construct(
         private PurgeApi $purgeApi,
-        #[ServiceId] string $fastlyServiceId,
-        #[SoftPurge] bool $enableSoftPurge,
+        #[ServiceId] private string $fastlyServiceId,
+        #[SoftPurge] private bool $enableSoftPurge,
     ) {
-        $this->fastlyServiceId = $fastlyServiceId;
-        $this->enableSoftPurge = $enableSoftPurge;
     }
 
     /**
