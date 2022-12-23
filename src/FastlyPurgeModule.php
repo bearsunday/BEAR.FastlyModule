@@ -17,6 +17,11 @@ use Ray\Di\Scope;
 
 /**
  * Provides Fastly's tag-based cache purge feature and derived bindings.
+ *
+ * The following bindings are provided:
+ *
+ * PurgerInterface
+ * PurgeApi
  */
 final class FastlyPurgeModule extends AbstractModule
 {
