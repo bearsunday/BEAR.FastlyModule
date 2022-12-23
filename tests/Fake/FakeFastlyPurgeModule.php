@@ -15,9 +15,6 @@ use Ray\Di\Scope;
 
 final class FakeFastlyPurgeModule extends AbstractModule
 {
-    /**
-     * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
-     */
     public function __construct(
         private string $fastlyApiKey,
         private string $fastlyServiceId,
