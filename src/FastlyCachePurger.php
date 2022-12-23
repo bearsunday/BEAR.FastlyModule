@@ -14,9 +14,7 @@ use function explode;
 
 final class FastlyCachePurger implements PurgerInterface
 {
-    /**
-     * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
-     */
+    /** @SuppressWarnings("PHPMD.BooleanArgumentFlag") */
     public function __construct(
         private PurgeApi $purgeApi,
         #[ServiceId] private string $fastlyServiceId,
