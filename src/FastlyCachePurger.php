@@ -16,8 +16,6 @@ final class FastlyCachePurger implements PurgerInterface
     private bool $enableSoftPurge;
 
     /**
-     * @ServiceId("fastlyServiceId")
-     * @SoftPurge("enableSoftPurge")
      * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
      */
     public function __construct(
