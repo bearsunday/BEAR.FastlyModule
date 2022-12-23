@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BEAR\FastlyModule;
 
-use BEAR\QueryRepository\PurgerInterface;
 use BEAR\Resource\ResourceInterface;
 use Fastly\Api\PurgeApi;
 use PHPUnit\Framework\TestCase;
@@ -13,21 +12,12 @@ use Ray\Di\Injector;
 use function assert;
 use function is_array;
 
-class FastlyCachePurgerModuleTest extends TestCase
+class FastlySoftPurgeModuleTest extends TestCase
 {
-    public function testModule(): void
-    {
-        $module = new FastlyPurgeModule('apiKey', 'serviceId', true);
-        $injector = new Injector($module, $_ENV['TMP_DIR']);
-
-        $this->assertInstanceOf(PurgeApi::class, $injector->getInstance(PurgeApi::class));
-        $this->assertInstanceOf(PurgerInterface::class, $injector->getInstance(FastlyCachePurger::class));
-    }
-
-    public function testPurge(): void
+    public function testSoftPurge(): void
     {
         $module = ModuleFactory::getInstance('FakeVendor\HelloWorld');
-        $module->override(new FakeFastlyPurgeModule('apiKey', 'serviceId', true));
+        $module->override(new FastlyEnableSoftPurgeModule(new FakeFastlyPurgeModule('apiKey', 'serviceId')));
 
         $injector =  new Injector($module, $_ENV['TMP_DIR']);
         $resource = $injector->getInstance(ResourceInterface::class);

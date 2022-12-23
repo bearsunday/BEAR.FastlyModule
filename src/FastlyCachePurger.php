@@ -20,7 +20,7 @@ final class FastlyCachePurger implements PurgerInterface
     public function __construct(
         private PurgeApi $purgeApi,
         #[ServiceId] private string $fastlyServiceId,
-        #[SoftPurge] private bool $enableSoftPurge,
+        #[SoftPurge] private bool $enableSoftPurge = false,
     ) {
     }
 

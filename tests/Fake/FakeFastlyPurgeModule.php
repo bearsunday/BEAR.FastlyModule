@@ -21,7 +21,6 @@ final class FakeFastlyPurgeModule extends AbstractModule
     public function __construct(
         private string $fastlyApiKey,
         private string $fastlyServiceId,
-        private bool $enableSoftPurge = true,
         ?AbstractModule $module = null
     ) {
 
@@ -40,7 +39,7 @@ final class FakeFastlyPurgeModule extends AbstractModule
             'config' => Configuration::class,
         ])->in(Scope::SINGLETON);
         $this->bind()->annotatedWith(ServiceId::class)->toInstance($this->fastlyServiceId);
-        $this->bind()->annotatedWith(SoftPurge::class)->toInstance($this->enableSoftPurge);
+        $this->bind()->annotatedWith(SoftPurge::class)->toInstance(false);
         $this->bind(ClientInterface::class)->annotatedWith(FastlyApi::class)->to(Client::class);
         $this->bind(PurgerInterface::class)->to(FastlyCachePurger::class);
     }

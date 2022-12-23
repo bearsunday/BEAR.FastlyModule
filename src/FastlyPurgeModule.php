@@ -6,7 +6,6 @@ namespace BEAR\FastlyModule;
 
 use BEAR\FastlyModule\Attribute\FastlyApi;
 use BEAR\FastlyModule\Attribute\ServiceId;
-use BEAR\FastlyModule\Attribute\SoftPurge;
 use BEAR\QueryRepository\PurgerInterface;
 use Fastly\Api\PurgeApi;
 use Fastly\Configuration;
@@ -25,11 +24,9 @@ use Ray\Di\Scope;
  */
 final class FastlyPurgeModule extends AbstractModule
 {
-    /** @SuppressWarnings("PHPMD.BooleanArgumentFlag") */
     public function __construct(
         private string $fastlyApiKey,
         private string $fastlyServiceId,
-        private bool $enableSoftPurge = true,
         AbstractModule|null $module = null,
     ) {
         parent::__construct($module);
@@ -45,7 +42,6 @@ final class FastlyPurgeModule extends AbstractModule
             'config' => Configuration::class,
         ])->in(Scope::SINGLETON);
         $this->bind()->annotatedWith(ServiceId::class)->toInstance($this->fastlyServiceId);
-        $this->bind()->annotatedWith(SoftPurge::class)->toInstance($this->enableSoftPurge);
         $this->bind(ClientInterface::class)->annotatedWith(FastlyApi::class)
             ->toConstructor(Client::class, ['config' => 'fastly_http_client_options']);
         $this->bind(PurgerInterface::class)->to(FastlyCachePurger::class);
