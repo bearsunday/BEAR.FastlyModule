@@ -2,6 +2,9 @@
 
 namespace BEAR\FastlyModule;
 
+use BEAR\FastlyModule\Attribute\FastlyApi;
+use BEAR\FastlyModule\Attribute\ServiceId;
+use BEAR\FastlyModule\Attribute\SoftPurge;
 use BEAR\QueryRepository\PurgerInterface;
 use Fastly\Api\PurgeApi;
 use Fastly\Configuration;
