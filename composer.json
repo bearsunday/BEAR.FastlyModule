@@ -87,5 +87,11 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "bamarni/composer-bin-plugin": true
         }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": true
+        }
     }
 }
