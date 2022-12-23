@@ -16,7 +16,4 @@ use Ray\Di\Di\Qualifier;
 #[Attribute(Attribute::TARGET_PARAMETER), Qualifier]
 final class ServiceId
 {
-    public function __construct()
-    {
-    }
 }
