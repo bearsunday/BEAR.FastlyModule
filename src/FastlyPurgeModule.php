@@ -12,6 +12,9 @@ use GuzzleHttp\ClientInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
+/**
+ * Provides Fastly's tag-based cache purge feature and derived bindings.
+ */
 final class FastlyPurgeModule extends AbstractModule
 {
     /** @SuppressWarnings("PHPMD.BooleanArgumentFlag") */
