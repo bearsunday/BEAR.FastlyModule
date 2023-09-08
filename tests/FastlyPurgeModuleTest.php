@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace BEAR\FastlyModule;
 
-use BEAR\QueryRepository\PurgerInterface;
-use BEAR\Resource\ResourceInterface;
 use Fastly\Api\PurgeApi;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
 use function assert;
-use function is_array;
 
 class FastlyPurgeModuleTest extends TestCase
 {
@@ -21,26 +18,22 @@ class FastlyPurgeModuleTest extends TestCase
         $injector = new Injector($module, $_ENV['TMP_DIR']);
 
         $this->assertInstanceOf(PurgeApi::class, $injector->getInstance(PurgeApi::class));
-        $this->assertInstanceOf(PurgerInterface::class, $injector->getInstance(FastlyCachePurger::class));
+        $this->assertInstanceOf(FastlyCachePurgerInterface::class, $injector->getInstance(FastlyCachePurgerInterface::class));
     }
 
     public function testPurge(): void
     {
-        $module = ModuleFactory::getInstance('FakeVendor\HelloWorld');
-        $module->override(new FakeFastlyPurgeModule('apiKey', 'serviceId'));
+        $module = new FastlyPurgeModule('apiKey', 'serviceId');
+        $module->override(new FakeFastlyPurgeModule());
 
         $injector =  new Injector($module, $_ENV['TMP_DIR']);
-        $resource = $injector->getInstance(ResourceInterface::class);
-        assert($resource instanceof ResourceInterface);
-        $resource->get('page://self/blog-posting');
+        $cachePurger = $injector->getInstance(FastlyCachePurgerInterface::class);
+        assert($cachePurger instanceof FastlyCachePurgerInterface);
+        ($cachePurger)('fakeTag');
 
-        $api = $injector->getInstance(PurgeApi::class);
-        assert($api instanceof FakeFastlyPurgeApi);
-        $this->assertIsArray($api->logs);
-
-        $this->assertSame(0, $api->logs[0]['fastly_soft_purge']);
-        $this->assertSame('serviceId', $api->logs[0]['service_id']);
-        assert(is_array($api->logs[0]['purge_response']));
-        $this->assertSame('_blog-posting_', $api->logs[0]['purge_response']['surrogate_keys'][0]);
+        $purgeApi = $injector->getInstance(PurgeApi::class);
+        assert($purgeApi instanceof FakeFastlyPurgeApi);
+        $this->assertSame($purgeApi->logs[0]['purge_response']['surrogate_keys'], ['fakeTag']);
+        $this->assertSame($purgeApi->logs[0]['fastly_soft_purge'], 0);
     }
 }

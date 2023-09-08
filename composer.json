@@ -10,8 +10,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "bear/query-repository": "^1.8.0",
-        "bear/resource": "^1.18",
         "fastly/fastly": "^1.0",
         "guzzlehttp/guzzle": "^7.5",
         "ray/di": "^2.13.1"
