@@ -6,13 +6,12 @@ namespace BEAR\FastlyModule;
 
 use BEAR\FastlyModule\Attribute\ServiceId;
 use BEAR\FastlyModule\Attribute\SoftPurge;
-use BEAR\QueryRepository\PurgerInterface;
 use Fastly\Api\PurgeApi;
 use Fastly\ApiException;
 
 use function explode;
 
-final class FastlyCachePurger implements PurgerInterface
+final class FastlyCachePurger implements FastlyCachePurgerInterface
 {
     /** @SuppressWarnings("PHPMD.BooleanArgumentFlag") */
     public function __construct(

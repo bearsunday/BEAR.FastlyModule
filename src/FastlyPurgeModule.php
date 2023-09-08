@@ -6,7 +6,6 @@ namespace BEAR\FastlyModule;
 
 use BEAR\FastlyModule\Attribute\FastlyApi;
 use BEAR\FastlyModule\Attribute\ServiceId;
-use BEAR\QueryRepository\PurgerInterface;
 use Fastly\Api\PurgeApi;
 use Fastly\Configuration;
 use GuzzleHttp\Client;
@@ -44,6 +43,6 @@ final class FastlyPurgeModule extends AbstractModule
         $this->bind()->annotatedWith(ServiceId::class)->toInstance($this->fastlyServiceId);
         $this->bind(ClientInterface::class)->annotatedWith(FastlyApi::class)
             ->toConstructor(Client::class, ['config' => 'fastly_http_client_options']);
-        $this->bind(PurgerInterface::class)->to(FastlyCachePurger::class);
+        $this->bind(FastlyCachePurgerInterface::class)->to(FastlyCachePurger::class);
     }
 }
