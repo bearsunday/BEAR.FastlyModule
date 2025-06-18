@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "fastly/fastly": "^v10.0",
+        "fastly/fastly": "^10.0",
         "guzzlehttp/guzzle": "^7.5",
         "ray/di": "^2.13.1"
     },
