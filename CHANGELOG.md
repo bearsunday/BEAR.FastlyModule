@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.0] - 2025-09-24
+
+- Support Fastly SDK v11
+
 ## [1.1.0] - 2025-09-24
 
 - Add code example for Fastly CDN integration
